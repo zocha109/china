@@ -21,3 +21,46 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
+
+    private List<Recipe> recipeList;
+    private RecyclerView recyclerView;
+    private RecipeAdapter adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        recipeList = new ArrayList<>();
+        recyclerView = findViewById(R.id.recyclerView);
+        adapter = new RecipeAdapter(this, recipeList);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        prepareRecipes();
+    }
+
+    private void prepareRecipes() {
+        // add sample recipes to the list
+        Recipe recipe1 = new Recipe("Mapo Tofu", "Spicy tofu and ground pork", "https://www.youtube.com/watch?v=p2hu47Nbyz8", "chinese, spicy, pork, tofu", "https://www.example.com/recipe1.jpg");
+        Recipe recipe2 = new Recipe("Kung Pao Chicken", "Spicy chicken with peanuts", "https://www.youtube.com/watch?v=UvSoCzJGYBA", "chinese, spicy, chicken, peanuts", "https://www.example.com/recipe2.jpg");
+        Recipe recipe3 = new Recipe("Hot and Sour Soup", "Spicy and sour soup with tofu and mushrooms", "https://www.youtube.com/watch?v=uxxtVHsSBNk", "chinese, soup, spicy, sour, tofu, mushrooms", "https://www.example.com/recipe3.jpg");
+
+        recipeList.add(recipe1);
+        recipeList.add(recipe2);
+        recipeList.add(recipe3);
+
+        adapter.notifyDataSetChanged();
+    }
+}
